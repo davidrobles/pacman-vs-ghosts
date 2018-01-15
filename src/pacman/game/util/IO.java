@@ -58,29 +58,23 @@ public class IO
 	 * 
 	 * @param fileName the file to be loaded
 	 * @return the data contained in the file specified
+	 * @throws IOException 
 	 */
-	public static String loadFile(String fileName)
+	public static String loadFile(String fileName) throws IOException
 	{
 		StringBuffer data=new StringBuffer();
 			
-        try
-        {         	
-        	BufferedReader br=new BufferedReader(new InputStreamReader(new FileInputStream(DIRECTORY+fileName)));	 
-            String input=br.readLine();	
-            
-            while(input!=null)
-            {
-            	if(!input.equals(""))
-            		data.append(input+"\n");
+		BufferedReader br=new BufferedReader(new InputStreamReader(new FileInputStream(DIRECTORY+fileName)));	 
+		String input=br.readLine();	
 
-            	input=br.readLine();
-            }
-        }
-        catch(IOException ioe)
-        {
-            ioe.printStackTrace();
-        }
-        
+		while(input!=null)
+		{
+			if(!input.equals(""))
+				data.append(input+"\n");
+
+			input=br.readLine();
+		}
+		br.close();
         return data.toString();
 	}
 }

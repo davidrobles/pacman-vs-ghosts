@@ -1,5 +1,6 @@
 package pacman.game;
 
+import java.io.IOException;
 import java.util.BitSet;
 import java.util.EnumMap;
 import java.util.Random;
@@ -54,7 +55,13 @@ public final class Game
 	static 
 	{
 		for(int i=0;i<mazes.length;i++)
-			mazes[i]=new Maze(i);
+			try {
+				mazes[i]=new Maze(i);
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+				System.exit(1);
+			}
 	}
 	
 	public static PathsCache[] caches=new PathsCache[NUM_MAZES];
