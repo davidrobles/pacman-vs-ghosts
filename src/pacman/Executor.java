@@ -316,8 +316,9 @@ public class Executor
 	 *
 	 * @param fileName The file name of the game to be played
 	 * @param visual Indicates whether or not to use visuals
+	 * @throws IOException 
 	 */
-	public void replayGame(String fileName,boolean visual)
+	public void replayGame(String fileName,boolean visual) throws IOException
 	{
 		ArrayList<String> timeSteps=loadReplay(fileName);
 		
@@ -346,16 +347,16 @@ public class Executor
 	}
 	
 	//save file for replays
-    public static void saveToFile(String data,String name,boolean append)
-    {
-        try 
-        {
-            FileOutputStream outS=new FileOutputStream(name,append);
-            PrintWriter pw=new PrintWriter(outS);
+	public static void saveToFile(String data,String name,boolean append)
+	{
+		try 
+		{
+			FileOutputStream outS=new FileOutputStream(name,append);
+			PrintWriter pw=new PrintWriter(outS);
 
-            pw.println(data);
-            pw.flush();
-            outS.close();
+			pw.println(data);
+			pw.flush();
+			outS.close();
 
         } 
         catch (IOException e)
@@ -365,28 +366,23 @@ public class Executor
     }  
 
     //load a replay
-    private static ArrayList<String> loadReplay(String fileName)
-	{
+    private static ArrayList<String> loadReplay(String fileName) throws IOException
+    {
     	ArrayList<String> replay=new ArrayList<String>();
-		
-        try
-        {         	
-        	BufferedReader br=new BufferedReader(new InputStreamReader(new FileInputStream(fileName)));	 
-            String input=br.readLine();		
-            
-            while(input!=null)
-            {
-            	if(!input.equals(""))
-            		replay.add(input);
 
-            	input=br.readLine();	
-            }
-        }
-        catch(IOException ioe)
-        {
-            ioe.printStackTrace();
-        }
-        
-        return replay;
+    	BufferedReader br=new BufferedReader(new InputStreamReader(new FileInputStream(fileName)));	 
+    	String input=br.readLine();		
+
+    	while(input!=null)
+    	{
+    		if(!input.equals(""))
+    			replay.add(input);
+
+    		input=br.readLine();	
+    	}
+    	br.close();
+
+
+    	return replay;
 	}
 }
